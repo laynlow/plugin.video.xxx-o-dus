@@ -1,0 +1,31 @@
+Welcome to XXX-O-DUS
+
+[B]Massive Credit to @_PYDEV_ KingKong for the pyxbmct work to provide a stunning interface to view the dialogs in this addon and the GitHub issues! Also A huge credit to jokstergfx for the icons and fanarts in this addon and many others! Thank you![/B]
+
+[B]IF YOU DO NOT READ THIS MESSAGE YOU WILL NOT GET ALL OF THE BENEFITS XXXODUS HAS TO OFFER![/B]
+
+Features:
+
+XXXODUS offers many features including downloads, favorites, history and more.
+
+To get the benefits of these features you must view the context menu.
+
+If you open the context menu on a video you will have the option to download, add to favorites etc.
+You can also remove search terms, remove history items, download from history and more but you must view the context menu to do this.
+
+Inside the XXXODUS settings there are many options you can choose from. For example XXXODUS will return numerous video source quality's for certain scrapers. You can select to auto play which will always pick the highest quality link found.
+
+There is also a Mobile Option. Enabling this will select the low quality links automatically to save on mobile data usage.
+
+VERY VERY IMPORTANT:
+
+XXXODUS will be managed and maintained from my GitHub. 
+
+I will ONLY listen to issues and feature requests when they are submitted to my git.
+
+You can get to the Xibalba GitHub at:
+
+[B]https://github.com/xibalba10[/B]
+
+
+Thank you for your time. ENJOY!

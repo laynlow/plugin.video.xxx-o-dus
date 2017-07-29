@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<settings>
+    <category label="[COLOR dodgerblue]General[/COLOR]">
+        <setting type="lsep" label="[COLOR dodgerblue][B]Monitoring Settings[/B][/COLOR]"/>
+        <setting id="search_setting" type="bool" label="[COLOR white]Search History:[/COLOR]" default="true"/>
+        <setting id="history_setting" type="bool" label="[COLOR white]Log History:[/COLOR]" default="true"/>
+        <setting type="lsep" label="[COLOR dodgerblue][B]Download Settings[/B][/COLOR]"/>
+        <setting id="download_location" type="folder" label="[COLOR white]Download Location:[/COLOR]" default="special://home\userdata\addon_data\plugin.video.xxx-o-dus\Downloads\"/>
+        <setting type="lsep" label="[COLOR dodgerblue][B]View Types[/B][/COLOR]"/>
+        <setting id="list_view" label="Default List View" type="number" default="0" visible="true"/>
+        <setting id="thumb_view" label="Default Thumbnail View" type="number" default="0" visible="true"/>     
+        <setting id="search_view" label="Default Search View" type="number" default="0" visible="true"/>     
+        <setting id="picture_view" label="Default Picture View" type="number" default="0" visible="true"/>    
+    </category>
+        
+    <category label="[COLOR dodgerblue]Chaturbate[/COLOR]">
+        <setting id="chaturbate_start" type="bool" label="[COLOR white]Notify When Monitored User Comes Onlne:[/COLOR]" default="true"/>
+        <setting id="chaturbate_subject" type="bool" label="[COLOR white]Show Room Subject Notifications:[/COLOR]" default="true"/>
+        <setting id="chaturbate_subject_refresh" label="[COLOR white]Refresh and Display Room Subect Every (Seconds):[/COLOR]" type="number" default="60" visible="true"/>     
+        <setting id="chaturbate_band" type="enum" values="Low Bandwidth|High Bandwidth|Always Ask" label="[COLOR white]Default Stream Bandwidth[/COLOR]" default="0"/>
+    </category>
+
+    <category label="[COLOR grey]Developer[/COLOR]">
+        <setting id="dev_debug" type="bool" label="[COLOR white]Developer Debug:[/COLOR]" default="false"/>
+        <setting id="dev_scrapers" type="bool" label="[COLOR white]Disable Scraper Check:[/COLOR]" default="false"/>
+    </category>
+</settings>
