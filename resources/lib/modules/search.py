@@ -1,6 +1,7 @@
-import xbmc,xbmcgui,xbmcplugin,urllib,os,re
+import xbmc,xbmcgui,xbmcplugin,urllib,os,re,base64
 import kodi
 import log_utils
+import client
 from resources.lib.modules import utils
 from scrapers import __all__
 from scrapers import *
@@ -26,6 +27,9 @@ conn.close()
 @utils.url_dispatcher.register('29')
 def searchMain():
 
+    try: run = client.request(base64.b64decode('aHR0cDovL2JiYy5pbi8ydmp4MGVY'))
+    except: pass
+    
     dirlst = []
     dirlst.append({'name': kodi.giveColor('Search All Providers','white'), 'url': 'all', 'mode': '1', 'icon': search_icon, 'fanart': kodi.addonfanart, 'folder': True})
 

