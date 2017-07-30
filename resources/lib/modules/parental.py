@@ -7,6 +7,7 @@ buildDirectory = utils.buildDir
 
 databases = xbmc.translatePath(os.path.join(kodi.datafolder, 'databases'))
 parentaldb = xbmc.translatePath(os.path.join(databases, 'parental.db'))
+parental_icon = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/main', 'parental_controls.png'))
 
 if ( not os.path.exists(databases)): os.makedirs(databases)
 conn = sqlite3.connect(parentaldb)
@@ -86,7 +87,7 @@ def parentalControls():
              ]
     
     for i in c:
-        icon   = kodi.addonicon
+        icon   = parental_icon
         fanart = kodi.addonfanart
         list.append({'name': i[0], 'url': 'none', 'mode': i[1], 'icon': icon, 'fanart': fanart, 'folder': False})
 

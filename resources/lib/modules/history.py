@@ -7,6 +7,7 @@ import sqlite3
 buildDirectory = utils.buildDir
 databases = xbmc.translatePath(os.path.join(kodi.datafolder, 'databases'))
 historydb = xbmc.translatePath(os.path.join(databases, 'history.db'))
+history_icon = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/main', 'history.png'))
 
 if ( not os.path.exists(databases)): os.makedirs(databases)
 conn = sqlite3.connect(historydb)
@@ -26,8 +27,8 @@ def getHistory():
     if history_on_off == "true":
 
         lst = [
-              ('Clear History',None,21,None,False),('Disable History',None,22,None,False), \
-              ('###########################################',None,999,None,False) \
+              ('Clear History',None,21,history_icon,False),('Disable History',None,22,history_icon,False), \
+              ('-------------------------------------',None,999,history_icon,False) \
               ]
             
         conn = sqlite3.connect(historydb)
@@ -39,18 +40,20 @@ def getHistory():
             if site == 'Local File': lst += [('[%s | %s - %s] - %s' % (date,time,kodi.giveColor(site,'deeppink'),title),url+'site='+site+'typeid=history',803,iconimage,False)]
             else: lst += [('[%s | %s - %s] - %s' % (date,time,kodi.giveColor(site,'deeppink'),title),url+'site='+site+'typeid=history',803,iconimage,True)]
         conn.close()
+
+        if len(lst) < 4:
+            lst += [('No History Found',None,999,history_icon,False)]
     else: 
         lst = [
-               ('Enable History Monitoring',None,22,None),('###########################################',None,22,None,False), \
-               ('History monitoring is currently disabled.',None,22,None,False) \
+               ('Enable History Monitoring',None,22,history_icon,False),('-------------------------------------',None,22,history_icon,False), \
+               ('History monitoring is currently disabled.',None,22,history_icon,False) \
               ]
             
     dirlst = []
     for i in lst:
         if not i[3]: icon = kodi.addonicon
         else: icon = i[3]
-        if not i[3]: fanart = kodi.addonfanart
-        else: fanart = i[3]
+        fanart = kodi.addonfanart
         dirlst.append({'name': kodi.giveColor(i[0],'white'), 'url': i[1], 'mode': i[2], 'icon': icon, 'fanart': fanart, 'folder': False, 'isDownloadable': i[4]})
 
     buildDirectory(dirlst)

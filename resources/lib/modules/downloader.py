@@ -14,6 +14,8 @@ import client
 import sqlite3
 buildDirectory = utils.buildDir
 
+download_icon = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/main', 'downloads.png'))
+
 class MyOpener(FancyURLopener):
     version = 'python-requests/2.9.1'
 
@@ -38,11 +40,13 @@ conn.close()
 @utils.url_dispatcher.register('27')
 def getDownloads():
 
+    if ( not os.path.exists(download_folder) ): os.makedirs(download_folder)
+
     dirlist = []
     lst = [
-           (kodi.giveColor('Download Location: ','white')+'file_path'+kodi.giveColor(str(download_folder),'dodgerblue'),None,19,None,False), \
-           (kodi.giveColor('Change Download Location','white'),None,19,None,False), \
-           ('###########################################',None,999,None,False) \
+           (kodi.giveColor('Download Location: ','white')+'file_path'+kodi.giveColor(str(download_folder),'violet'),None,19,download_icon,False), \
+           (kodi.giveColor('Change Download Location','white'),None,19,download_icon,False), \
+           ('-----------------------------------------------',None,999,download_icon,False) \
           ]
           
     extensions = ['.mp4']
@@ -75,6 +79,9 @@ def getDownloads():
 
     if c: c.close()
     
+    if len(lst) < 4:
+        dirlist.append({'name': kodi.giveColor('No Downloads Found','white'), 'url': 'None', 'mode': 999, 'icon': download_icon, 'fanart': None, 'folder': False})
+
     buildDirectory(dirlist)    
     
 def addDownload(name,url,img):

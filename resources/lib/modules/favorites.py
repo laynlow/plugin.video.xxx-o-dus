@@ -7,6 +7,7 @@ import sqlite3
 buildDirectory = utils.buildDir
 databases = xbmc.translatePath(os.path.join(kodi.datafolder, 'databases'))
 favoritesdb = xbmc.translatePath(os.path.join(databases, 'favorites.db'))
+fav_icon = xbmc.translatePath(os.path.join('special://home/addons/script.xxxodus.artwork/resources/art/main', 'favourites.png'))
 
 if ( not os.path.exists(databases)): os.makedirs(databases)
 conn = sqlite3.connect(favoritesdb)
@@ -21,8 +22,8 @@ conn.close()
 def getFavorites():
 
     dirlist = []
-    lst = [('Clear Favourites',None,38,None,None,None,False,False), \
-           ('###########################################',None,999,None,None,None,False,False) \
+    lst = [('Clear Favourites',None,38,fav_icon,None,None,False,False), \
+           ('----------------------------------',None,999,fav_icon,None,None,False,False) \
           ]
     conn = sqlite3.connect(favoritesdb)
     conn.text_factory = str
@@ -44,6 +45,9 @@ def getFavorites():
         if not i[4]: fanart = kodi.addonfanart
         else: fanart = i[4]
         dirlist.append({'name': kodi.giveColor(i[0],'white'), 'url': i[1], 'mode': i[2], 'icon': icon, 'fanart': fanart, 'fav': i[5], 'folder': i[6], 'isDownloadable': i[7]})
+    
+    if len(lst) < 3:
+        dirlist.append({'name': kodi.giveColor('No Favorites Found','white'), 'url': 'None', 'mode': 999, 'icon': fav_icon, 'fanart': fanart, 'folder': False})
 
     buildDirectory(dirlist)
 
