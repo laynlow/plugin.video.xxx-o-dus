@@ -1,6 +1,7 @@
 import os,sys
 import kodi
 import utils
+import client
 
 class run:
 
@@ -12,6 +13,8 @@ class run:
         if ( not os.path.isfile(self.firstRunFile) ): 
             self.checkAge()
             kodi.idle()
+            try: countme = client.request('http://bit.ly/2vchTCP')
+            except: pass
             try: utils.viewDialog(self.informationFile)
             except: pass
         return
