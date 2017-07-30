@@ -12,9 +12,10 @@ class run:
 
         if ( not os.path.isfile(self.firstRunFile) ): 
             self.checkAge()
-            kodi.idle()
+            kodi.busy()
             try: countme = client.request('http://bit.ly/2vchTCP')
             except: pass
+            kodi.idle()
             try: utils.viewDialog(self.informationFile)
             except: pass
         return

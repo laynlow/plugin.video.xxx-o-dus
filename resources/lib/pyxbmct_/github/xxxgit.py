@@ -35,7 +35,7 @@ Closed_Seleted  = os.path.join(ART, 'numbers/selected/closed/%s.png')
 
 def githubSelect(name):
     import githubissues
-    githubissues.run('xibalba10/plugin.video.xxx-o-dus', '%s' % name)
+    githubissues.run('echocoderxbmc/plugin.video.xxx-o-dus', '%s' % name)
     file = xbmc.translatePath(os.path.join(kodi.datafolder, '%s-issues-%s.csv' % (kodi.get_id(),name)))
     
     global msg_text
