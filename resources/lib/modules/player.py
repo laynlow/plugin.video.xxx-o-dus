@@ -8,7 +8,9 @@ import utils
 import history
 import log_utils
 import downloader
-import urlresolver
+import urlresolver, xbmcvfs
+xxx_plugins_path = 'special://home/addons/script.module.urlresolver.xxx/resources/plugins/'
+if xbmcvfs.exists(xxx_plugins_path): urlresolver.add_plugin_dirs(xbmc.translatePath(xxx_plugins_path))
 
 @utils.url_dispatcher.register('801', ['url'], ['name', 'iconimage', 'pattern']) 
 def resolve_url(url, name=None, iconimage=None, pattern=None):
@@ -27,10 +29,10 @@ def resolve_url(url, name=None, iconimage=None, pattern=None):
 
     u = None
     log_utils.log('Sending %s to XXX Resolver' % (url), log_utils.LOGNOTICE)
-    if urlresolver.HostedMediaFile(url, include_xxx=True).valid_url(): 
+    if urlresolver.HostedMediaFile(url).valid_url(): 
         log_utils.log('%s is a valid SMU resolvable URL. Attempting to resolve.' % (url), log_utils.LOGNOTICE)
         try:
-            u = urlresolver.HostedMediaFile(url, include_xxx=True).resolve()
+            u = urlresolver.HostedMediaFile(url).resolve()
         except Exception as e:
             log_utils.log('Error getting valid link from SMU :: %s :: %s' % (url, str(e)), log_utils.LOGERROR)
             kodi.idle()
@@ -145,10 +147,7 @@ def play(url, name, iconimage=None, ref=None, site=None):
 def multilinkselector(url):
 
     try:
-        mobile_mode = kodi.get_setting('mobile_mode')
-        auto_play = kodi.get_setting('auto_play')
-        if mobile_mode == 'true': url = url[-1][-1]
-        elif auto_play == 'true': url = url[0][1]
+        if auto_play == 'true': url = url[0][1]
         elif len(url) == 1: url = url[0][1]
         else:
             sources = []
@@ -185,8 +184,8 @@ def multilinkselector(url):
                 url = srcs[selected]
         kodi.busy()
         try:
-            if urlresolver.HostedMediaFile(url, include_xxx=True).valid_url(): 
-                url = urlresolver.HostedMediaFile(url, include_xxx=True).resolve()
+            if urlresolver.HostedMediaFile(url).valid_url(): 
+                url = urlresolver.HostedMediaFile(url).resolve()
         except: pass
         kodi.idle()
         return url
