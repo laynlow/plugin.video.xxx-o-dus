@@ -51,7 +51,8 @@ def mainMenu():
          ('Search...',None,29,'search','Search XXX-O-DUS',True), \
          ('Live Cams',None,37,'webcams','Live Cams',True), \
          ('Tubes',None,4,'tubes','Videos',True), \
-         ('Scenes',None,36,'scenes','XXX Scenes',True), \
+         ('Scenes and Movies',None,36,'scenes','XXX Scenes',True), \
+         ('Virtual Reality',None,42,'vr','XXX Virtual Reality',True), \
          ('Hentai',None,39,'hentai','Hentai',True), \
          ('Vintage',None,270,'vintage','Vintage',True), \
          ('Fetish',None,40,'fetish','Fetish',True), \
@@ -215,6 +216,30 @@ def fetish():
     if fetish_sources:
         dirlst = []
         for i in sorted(fetish_sources):
+            dirlst.append({'name': kodi.giveColor(i[0],'white'), 'url': None, 'mode': i[1], 'icon': specific_icon % i[2], 'fanart': specific_fanart % i[2], 'folder': True})
+
+    buildDirectory(dirlst)
+
+@utils.url_dispatcher.register('42')
+def virtualReality():
+
+    try: run = client.request(base64.b64decode('aHR0cDovL2JiYy5pbi8ydm0yS3ps'))
+    except: pass
+    
+    sources = __all__ ; vr_sources = []; base_name = []; menu_mode = []; art_dir = []
+    sources = [i for i in sources]
+    for i in sources:
+        try:
+            if eval(i + ".type") == 'vr': 
+                base_name.append(eval(i + ".base_name"))
+                menu_mode.append(eval(i + ".menu_mode"))
+                art_dir.append(i)
+                vr_sources = zip(base_name,menu_mode,art_dir)
+        except: pass
+
+    if vr_sources:
+        dirlst = []
+        for i in sorted(vr_sources):
             dirlst.append({'name': kodi.giveColor(i[0],'white'), 'url': None, 'mode': i[1], 'icon': specific_icon % i[2], 'fanart': specific_fanart % i[2], 'folder': True})
 
     buildDirectory(dirlst)
