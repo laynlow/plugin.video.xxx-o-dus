@@ -1,0 +1,19 @@
+-----------------------------------------
+Version: 3.00.021
+
+--- Added Changelog section to main menu.
+--- Added Movies section to main menu.
+--- Fixed Watchxxxfree.
+--- Fixed Streamingporn Movies.
+--- Fixed Vintage.
+--- Added SexVR to Virtual Reality.
+--- Added Xtheatre to Movies.
+
+-----------------------------------------
+Version: 3.00.020
+
+--- Added Javtasty
+--- Added Virtual Reality Section
+--- Added Smash VR
+
+-----------------------------------------

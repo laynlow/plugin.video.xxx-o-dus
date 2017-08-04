@@ -51,13 +51,14 @@ def mainMenu():
          ('Search...',None,29,'search','Search XXX-O-DUS',True), \
          ('Live Cams',None,37,'webcams','Live Cams',True), \
          ('Tubes',None,4,'tubes','Videos',True), \
-         ('Scenes and Movies',None,36,'scenes','XXX Scenes',True), \
+         ('Scenes',None,36,'scenes','XXX Scenes',True), \
+         ('Movies',None,43,'movies','XXX Movies',True), \
          ('Virtual Reality',None,42,'vr','XXX Virtual Reality',True), \
          ('Hentai',None,39,'hentai','Hentai',True), \
          ('Vintage',None,270,'vintage','Vintage',True), \
          ('Fetish',None,40,'fetish','Fetish',True), \
          ('Pictures',None,35,'pics','Pictures',True), \
-         ('Comics',None,41,'comics','comics',True), \
+         ('Comics',None,41,'comics','Comics',True), \
          ('Parental Controls',None,5,'parental_controls','View/Change Parental Control Settings.',True), \
          ('Your History',None,20,'history','View Your History.',True), \
          ('Your Favourites',None,23,'favourites','View Your Favourites.',True), \
@@ -65,6 +66,7 @@ def mainMenu():
          ('Your Settings',None,19,'settings','View/Change Addon Settings.',False), \
          ('View Disclaimer',xbmc.translatePath(os.path.join(kodi.addonfolder, 'resources/files/disclaimer.txt')),17,'disclaimer','View XXX-O-DUS Disclaimer.',False), \
          ('View Addon Information',xbmc.translatePath(os.path.join(kodi.addonfolder, 'resources/files/information.txt')),17,'addon_info','View XXX-O-DUS Information.',False), \
+         ('View Changelog',xbmc.translatePath(os.path.join(kodi.addonfolder, 'changelog.txt')),17,'changelog','View XXX-O-DUS Changelog.',False), \
          ('RESET XXX-O-DUS',None,18,'reset','Reset XXX-O-DUS to Factory Settings.',False), \
          (kodi.giveColor('Report Issues @ https://github.com/echocoderxbmc/plugin.video.xxx-o-dus/issues','violet',True),xbmc.translatePath(os.path.join(kodi.addonfolder, 'resources/files/information.txt')),17,'report','All issues must be reported at https://github.com/echocoderxbmc/plugin.video.xxx-o-dus/issues or I will not know the issues exist. I will not provide support at any other location as one central place for everyone to see and discuss issues benefits everyone.',False), \
          ]
@@ -144,6 +146,30 @@ def scenes():
     if scene_sources:
         dirlst = []
         for i in sorted(scene_sources):
+            dirlst.append({'name': kodi.giveColor(i[0],'white'), 'url': None, 'mode': i[1], 'icon': specific_icon % i[2], 'fanart': specific_fanart % i[2], 'folder': True})
+
+    buildDirectory(dirlst)
+
+@utils.url_dispatcher.register('43')
+def movies():
+
+    try: run = client.request(base64.b64decode('aHR0cDovL2JiYy5pbi8yd2VVdHVN'))
+    except: pass
+    
+    sources = __all__ ; movies_sources = []; base_name = []; menu_mode = []; art_dir = []
+    sources = [i for i in sources]
+    for i in sources:
+        try:
+            if eval(i + ".type") == 'movies': 
+                base_name.append(eval(i + ".base_name"))
+                menu_mode.append(eval(i + ".menu_mode"))
+                art_dir.append(i.replace('_movies',''))
+                movies_sources = zip(base_name,menu_mode,art_dir)
+        except: pass
+
+    if movies_sources:
+        dirlst = []
+        for i in sorted(movies_sources):
             dirlst.append({'name': kodi.giveColor(i[0],'white'), 'url': None, 'mode': i[1], 'icon': specific_icon % i[2], 'fanart': specific_fanart % i[2], 'folder': True})
 
     buildDirectory(dirlst)

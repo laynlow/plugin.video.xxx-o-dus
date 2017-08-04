@@ -87,10 +87,8 @@ def play(url, name, iconimage=None, ref=None, site=None):
         url = adultresolver.resolve(url)
     log_utils.log('Failed to get any playable link for :: %s' % (url), log_utils.LOGERROR)
     if (not isinstance(url, str)): 
-        try:
-            url = multilinkselector(url)
+        try: url = multilinkselector(url)
         except: pass
-
     history_on_off  = kodi.get_setting("history_setting")
     if history_on_off == "true":
         web_checks = ['http:','https:','rtmp:']
@@ -98,7 +96,8 @@ def play(url, name, iconimage=None, ref=None, site=None):
         if any(f for f in web_checks if f in url): site = site.title()
         elif any(f for f in locak_checks if f in url): site = 'Local File'
         else: site = 'Unknown'
-
+        
+        kodi.notify(msg=url)
         if chatur:
             history.delEntry(ref)
             history.addHistory(name, ref, site.title(), iconimage)
@@ -147,8 +146,7 @@ def play(url, name, iconimage=None, ref=None, site=None):
 def multilinkselector(url):
 
     try:
-        if auto_play == 'true': url = url[0][1]
-        elif len(url) == 1: url = url[0][1]
+        if len(url) == 1: url = url[0][1]
         else:
             sources = []
 
@@ -189,4 +187,9 @@ def multilinkselector(url):
         except: pass
         kodi.idle()
         return url
-    except: return url[0][1]
+    except: 
+        try:
+            if urlresolver.HostedMediaFile(url[0][1]).valid_url(): 
+                url = urlresolver.HostedMediaFile(url[0][1]).resolve()
+            return url
+        except: pass
