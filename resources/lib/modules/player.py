@@ -65,84 +65,88 @@ def resolve_url(url, name=None, iconimage=None, pattern=None):
 @utils.url_dispatcher.register('803', ['url','name'], ['iconimage','ref', 'site']) 
 def play(url, name, iconimage=None, ref=None, site=None):
 
-    kodi.busy()
-    
-    if not site: 
-        if 'site=' in url: url,site = url.split('site=')
-        else: site = 'Unknown'
-    if not name: name = 'Unknown'
-    if not iconimage: iconimage = kodi.addonicon
-    name = re.sub(r'(\[.+?\])','',name); name = name.lstrip()
-    if '] - ' in name: name = name.split('] - ')[-1] 
+    try:
+        kodi.busy()
+        
+        if not site: 
+            if 'site=' in url: url,site = url.split('site=')
+            else: site = 'Unknown'
+        if not name: name = 'Unknown'
+        if not iconimage: iconimage = kodi.addonicon
+        name = re.sub(r'(\[.+?\])','',name); name = name.lstrip()
+        if '] - ' in name: name = name.split('] - ')[-1] 
 
-    chatur = False
-    
-    if ref:
-        if 'chaturbate.com' in ref:
+        chatur = False
+        
+        if ref:
+            if 'chaturbate.com' in ref:
+                chatur = True
+        else: ref = ''
+        if 'chaturbate.com' in url:
             chatur = True
-    else: ref = ''
-    if 'chaturbate.com' in url:
-        chatur = True
-        ref = url
-        url = adultresolver.resolve(url)
-    log_utils.log('Failed to get any playable link for :: %s' % (url), log_utils.LOGERROR)
-    if (not isinstance(url, str)): 
-        try: url = multilinkselector(url)
-        except: pass
-    history_on_off  = kodi.get_setting("history_setting")
-    if history_on_off == "true":
-        web_checks = ['http:','https:','rtmp:']
-        locak_checks = ['.mp4']
-        if any(f for f in web_checks if f in url): site = site.title()
-        elif any(f for f in locak_checks if f in url): site = 'Local File'
-        else: site = 'Unknown'
-        
-        kodi.notify(msg=url)
-        if chatur:
-            history.delEntry(ref)
-            history.addHistory(name, ref, site.title(), iconimage)
-        else:
-            history.delEntry(url)
-            history.addHistory(name, url, site.title(), iconimage)
+            ref = url
+            url = adultresolver.resolve(url)
+        if ( isinstance(url, list) ): 
+            try: url = multilinkselector(url)
+            except: pass
             
-    kodi.idle()
-
-    if 'chaturbate.com' in ref:
-        if kodi.get_setting("mobile_mode") == 'true':
-            url = url.replace('_fast_aac','_aac')
-        else:
-            bandwidth = kodi.get_setting("chaturbate_band")
-            if bandwidth == '0': url = url.replace('_fast_aac','_aac')
-            elif bandwidth == '2':
-                choice = kodi.dialog.select("[COLOR white][B]" + name + "[/B][/COLOR]", ['[COLOR white]Play High Bandwidth Stream[/COLOR]','[COLOR white]Play Low Bandwidth Stream[/COLOR]'])
-                if choice == 1: url = url.replace('_fast_aac','_aac')
-                elif choice == 0: pass
-                else: quit()
-
-        liz = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
-        xbmc.executebuiltin("Dialog.Close(busydialog)")
-        xbmc.Player().play(url, liz, False)
-        
-        if kodi.get_setting("chaturbate_subject") == "true":
-            sleeper = kodi.get_setting("chaturbate_subject_refresh")
-            i = 0
+        history_on_off  = kodi.get_setting("history_setting")
+        if history_on_off == "true":
+            web_checks = ['http:','https:','rtmp:']
+            locak_checks = ['.mp4']
+            try:
+                if any(f for f in web_checks if f in url): site = site.title()
+                elif any(f for f in locak_checks if f in url): site = 'Local File'
+                else: site = 'Unknown'
+            except: site = site.title()
+            
+            if chatur:
+                history.delEntry(ref)
+                history.addHistory(name, ref, site.title(), iconimage)
+            else:
+                history.delEntry(url)
+                history.addHistory(name, url, site.title(), iconimage)
                 
-            while not xbmc.Player().isPlayingVideo():
-                time.sleep(1)
-                i += 1
-                if i == 30: quit()
-            while xbmc.Player().isPlayingVideo():
-                try:
-                    r = client.request(ref)
-                    subject = re.compile('default_subject:\s\"([^,]+)",').findall(r)[0]; subject = urllib.unquote_plus(subject)
-                    kodi.notify(msg=subject, duration=8500, sound=True, icon_path=iconimage)
-                except: pass
-                time.sleep(int(sleeper))
-    else:                
-        liz = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
-        xbmc.executebuiltin("Dialog.Close(busydialog)")
-        xbmc.Player().play(url, liz, False)
- 
+        kodi.idle()
+
+        if 'chaturbate.com' in ref:
+            if kodi.get_setting("mobile_mode") == 'true':
+                url = url.replace('_fast_aac','_aac')
+            else:
+                bandwidth = kodi.get_setting("chaturbate_band")
+                if bandwidth == '0': url = url.replace('_fast_aac','_aac')
+                elif bandwidth == '2':
+                    choice = kodi.dialog.select("[COLOR white][B]" + name + "[/B][/COLOR]", ['[COLOR white]Play High Bandwidth Stream[/COLOR]','[COLOR white]Play Low Bandwidth Stream[/COLOR]'])
+                    if choice == 1: url = url.replace('_fast_aac','_aac')
+                    elif choice == 0: pass
+                    else: quit()
+
+            liz = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
+            xbmc.executebuiltin("Dialog.Close(busydialog)")
+            xbmc.Player().play(url, liz, False)
+            
+            if kodi.get_setting("chaturbate_subject") == "true":
+                sleeper = kodi.get_setting("chaturbate_subject_refresh")
+                i = 0
+                    
+                while not xbmc.Player().isPlayingVideo():
+                    time.sleep(1)
+                    i += 1
+                    if i == 30: quit()
+                while xbmc.Player().isPlayingVideo():
+                    try:
+                        r = client.request(ref)
+                        subject = re.compile('default_subject:\s\"([^,]+)",').findall(r)[0]; subject = urllib.unquote_plus(subject)
+                        kodi.notify(msg=subject, duration=8500, sound=True, icon_path=iconimage)
+                    except: pass
+                    time.sleep(int(sleeper))
+        else:
+            liz = xbmcgui.ListItem(name, iconImage=iconimage, thumbnailImage=iconimage)
+            xbmc.Player().play(url, liz, False)
+    except:
+        kodi.idle()
+        kodi.notify(msg='Error playing %s' % name)
+        
 def multilinkselector(url):
 
     try:

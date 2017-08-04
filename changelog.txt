@@ -1,4 +1,9 @@
 -----------------------------------------
+Version: 3.00.022
+
+--- Fix broken player.
+
+-----------------------------------------
 Version: 3.00.021
 
 --- Added Changelog section to main menu.
