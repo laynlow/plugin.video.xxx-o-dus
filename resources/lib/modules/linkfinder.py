@@ -10,7 +10,7 @@ import urlresolver
 @utils.url_dispatcher.register('810', ['url'], ['name', 'iconimage', 'pattern']) 
 def find(url, name=None, iconimage=None, pattern=None):
 
-    kodi.busy()
+    #kodi.busy()
     
     try: url,site = url.split('|SPLIT|')
     except: 
@@ -22,7 +22,12 @@ def find(url, name=None, iconimage=None, pattern=None):
             c = client.request(url)
             r = dom_parser2.parse_dom(c, 'iframe', req=['height','width'])
             r = [i.attrs['src'] for i in r if i.attrs['height'] == '400' and i.attrs['width'] == '700']
-            url = multi(r)       
+            url = multi(r)
+        elif 'spreadporn.org' in url:
+            c = client.request(url)
+            r = dom_parser2.parse_dom(c, 'li', req=['data-show','data-link'])
+            r = [(i.attrs['data-link']) for i in r]
+            url = multi(r)
         elif 'xtheatre.net' in url:
             c = client.request(url)
             pattern = '''<iframe\s*src=['"](?:[^'"]+)['"]\s*data-lazy-src=['"]([^'"]+)'''

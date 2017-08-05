@@ -1,4 +1,4 @@
-import xbmc,xbmcgui,xbmcplugin,sys,urllib,urlparse,os,base64,re,shutil
+import xbmc,xbmcaddon,xbmcgui,xbmcplugin,sys,urllib,urlparse,os,base64,re,shutil
 import kodi
 import client
 import dom_parser2
@@ -171,6 +171,14 @@ def buildDir(items, content='dirs', cm=[], search=False, stopend=False, isVideo 
             stext = "Open XXX-O-DUS Settings"
             cm.append(('%s' % stext, 'xbmc.RunPlugin('+open_set+')'))
 
+            if isDownloadable: view_type = 'thumb'
+            elif pictures: view_type = 'picture'
+            elif chaturbate: view_type = 'chaturbate'
+            else: view_type = 'list'
+            view_compile = '%s?mode=%s&name=%s' \
+            % (sysaddon,str('44'),view_type)
+            cm.append(('Set %s to this view mode by default.' % view_type.title(), 'xbmc.RunPlugin('+view_compile+')'))
+
             if cm: 
                 item.addContextMenuItems(cm, replaceItems=False)
                 cm=[]
@@ -187,7 +195,7 @@ def buildDir(items, content='dirs', cm=[], search=False, stopend=False, isVideo 
     if not stopend:
         if chaturbate: 
             xbmcplugin.setContent(kodi.syshandle, 'movies')
-            setView('list')
+            setView('chaturbate')
         elif pictures:
             xbmcplugin.setContent(kodi.syshandle, 'movies')
             setView('pictures')
@@ -207,12 +215,20 @@ def showSettings():
     kodi.show_settings()
     kodi.refresh_container()
     
+@url_dispatcher.register('44', ['name'])
+def setViewCM(viewtype):
+    window = xbmcgui.Window(xbmcgui.getCurrentWindowId())
+    viewid = str(window.getFocusId())
+    xbmcaddon.Addon().setSetting("%s_view" % (viewtype), viewid)
+    kodi.notify(kodi.get_name(),"%s view has been set to (%s)." % (viewtype.title(), viewid))
+
 def setView(name):
 
     list_mode  = int(kodi.get_setting("list_view"))
     thumb_mode = int(kodi.get_setting("thumb_view"))
     search_mode = int(kodi.get_setting("search_view"))
     picture_mode = int(kodi.get_setting("picture_view"))
+    chaturbate_mode = int(kodi.get_setting("chaturbate_view"))
 
     kodi_name = kodi.kodiVersion()
 
@@ -243,11 +259,19 @@ def setView(name):
         elif kodi_name == "Krypton":
             picture_mode='500'
         else: picture_mode='500'
+       
+    if chaturbate_mode == 0:
+        if kodi_name == "Jarvis":
+            chaturbate_mode='50'
+        elif kodi_name == "Krypton":
+            chaturbate_mode='54'
+        else: chaturbate_mode='50'
         
     if name == 'list': xbmc.executebuiltin('Container.SetViewMode(%s)' % list_mode)
     elif name == 'thumbs': xbmc.executebuiltin('Container.SetViewMode(%s)' % thumb_mode)
     elif name == 'search': xbmc.executebuiltin('Container.SetViewMode(%s)' % search_mode)
     elif name == 'pictures': xbmc.executebuiltin('Container.SetViewMode(%s)' % picture_mode)
+    elif name == 'chaturbate': xbmc.executebuiltin('Container.SetViewMode(%s)' % chaturbate_mode)
     else: xbmc.executebuiltin('Container.SetViewMode(%s)' % list_mode)
 
 @url_dispatcher.register('17',['url'])

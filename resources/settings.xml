@@ -7,10 +7,13 @@
         <setting type="lsep" label="[COLOR dodgerblue][B]Download Settings[/B][/COLOR]"/>
         <setting id="download_location" type="folder" label="[COLOR white]Download Location:[/COLOR]" default="special://home\userdata\addon_data\plugin.video.xxx-o-dus\Downloads\"/>
         <setting type="lsep" label="[COLOR dodgerblue][B]View Types[/B][/COLOR]"/>
-        <setting id="list_view" label="Default List View" type="number" default="0" visible="true"/>
-        <setting id="thumb_view" label="Default Thumbnail View" type="number" default="0" visible="true"/>     
-        <setting id="search_view" label="Default Search View" type="number" default="0" visible="true"/>     
-        <setting id="picture_view" label="Default Picture View" type="number" default="0" visible="true"/>    
+        <setting type="lsep" label="[COLOR white]You can save view modes by changing the view in the addon[/COLOR]"/>
+        <setting type="lsep" label="[COLOR white]and selecting to set the view mode in the context menu.[/COLOR]"/>
+        <setting id="list_view" label="Menus View" type="number" default="0" visible="true"/>
+        <setting id="thumb_view" label="Video View" type="number" default="0" visible="true"/>     
+        <setting id="search_view" label="Search View" type="number" default="0" visible="true"/> 
+        <setting id="chaturbate_view" label="Chaturbate View" type="number" default="0" visible="true"/>             
+        <setting id="picture_view" label="Picture View" type="number" default="0" visible="true"/>    
     </category>
         
     <category label="[COLOR dodgerblue]Chaturbate[/COLOR]">

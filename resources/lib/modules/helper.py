@@ -73,7 +73,7 @@ class scraper:
         except Exception as e:
             log_utils.log('Error getting next page for %s :: Error: %s' % (site.title(),str(e)), log_utils.LOGERROR)
             xbmcplugin.setContent(kodi.syshandle, 'movies')
-            if 'chaturbate' in url: utils.setView('list')
+            if 'chaturbate' in url: utils.setView('chaturbate')
             elif pictures: utils.setView('pictures')
             else: utils.setView('thumbs')
             xbmcplugin.endOfDirectory(kodi.syshandle, cacheToDisc=True)

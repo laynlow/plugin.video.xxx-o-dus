@@ -21,6 +21,8 @@ class streamer:
         
             if 'eporner.com' in url: u = self.eporner(url)
             
+            if 'girlfriendvideos.com' in url: u = self.girlfriendvideos(url)
+
             elif 'watchxxxfree.com' in url: u = self.watchxxxfree(url)
 
             elif 'porn00' in url: u = self.porn00(url)
@@ -163,6 +165,17 @@ class streamer:
             ret = table[num % n] + ret
             num = num // n
         return ret
+
+    def girlfriendvideos(self, url):
+        
+        try:
+            r = client.request(url)
+            r = r.replace('\\','')
+            pattern = r"""<video src="([^"]+)"""
+            link = re.findall(pattern,r)[0]
+            u = 'http://www.girlfriendvideos.com' + link
+            return u
+        except: return 
 
     def eporner(self, url):
         

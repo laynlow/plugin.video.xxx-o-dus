@@ -1,4 +1,12 @@
 -----------------------------------------
+Version: 3.00.023
+
+--- Option to save view mode via context menu.
+--- Added Spreadporn to Movies.
+--- Aded Girlfriend Videos to Tubes.
+--- Chaturbate view type added to settings.
+
+-----------------------------------------
 Version: 3.00.022
 
 --- Fix broken player.

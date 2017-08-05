@@ -37,8 +37,10 @@ def getHistory():
         c.execute("SELECT * FROM history ORDER BY ID DESC")
 
         for (ID, date, time, title, url, site, iconimage) in c.fetchall():
-            if site == 'Local File': lst += [('[%s | %s - %s] - %s' % (date,time,kodi.giveColor(site,'deeppink'),title),url+'site='+site+'typeid=history',803,iconimage,False)]
-            else: lst += [('[%s | %s - %s] - %s' % (date,time,kodi.giveColor(site,'deeppink'),title),url+'site='+site+'typeid=history',803,iconimage,True)]
+            try:
+                if site == 'Local File': lst += [('[%s | %s - %s] - %s' % (date,time,kodi.giveColor(site,'deeppink'),title),url+'site='+site+'typeid=history',803,iconimage,False)]
+                else: lst += [('[%s | %s - %s] - %s' % (date,time,kodi.giveColor(site,'deeppink'),title),url+'site='+site+'typeid=history',803,iconimage,True)]
+            except: pass
         conn.close()
 
         if len(lst) < 4:
