@@ -170,7 +170,7 @@ def movies():
     if movies_sources:
         dirlst = []
         for i in sorted(movies_sources):
-            dirlst.append({'name': kodi.giveColor(i[0],'white'), 'url': None, 'mode': i[1], 'icon': specific_icon % i[2], 'fanart': specific_fanart % i[2], 'folder': True})
+            dirlst.append({'name': kodi.giveColor(i[0],'white'), 'url': None, 'mode': i[1], 'icon': specific_icon % i[0].lower(), 'fanart': specific_fanart % i[0].lower(), 'folder': True})
 
     buildDirectory(dirlst)
 

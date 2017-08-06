@@ -169,7 +169,7 @@ class streamer:
     def girlfriendvideos(self, url):
         
         try:
-            r = client.request(url)
+            r = clilent.request(url)
             r = r.replace('\\','')
             pattern = r"""<video src="([^"]+)"""
             link = re.findall(pattern,r)[0]

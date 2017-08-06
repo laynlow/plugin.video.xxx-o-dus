@@ -16,7 +16,6 @@ if xbmcvfs.exists(xxx_plugins_path): urlresolver.add_plugin_dirs(xbmc.translateP
 def resolve_url(url, name=None, iconimage=None, pattern=None):
 
     kodi.busy()
-    
     try: url,site = url.split('|SPLIT|')
     except: 
         site = 'Unknown'
