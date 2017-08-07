@@ -21,7 +21,7 @@ class streamer:
         
             if 'eporner.com' in url: u = self.eporner(url)
             
-            if 'girlfriendvideos.com' in url: u = self.girlfriendvideos(url)
+            elif 'girlfriendvideos.com' in url: u = self.girlfriendvideos(url)
 
             elif 'watchxxxfree.com' in url: u = self.watchxxxfree(url)
 
@@ -169,7 +169,7 @@ class streamer:
     def girlfriendvideos(self, url):
         
         try:
-            r = clilent.request(url)
+            r = client.request(url)
             r = r.replace('\\','')
             pattern = r"""<video src="([^"]+)"""
             link = re.findall(pattern,r)[0]

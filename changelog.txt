@@ -1,7 +1,15 @@
 -----------------------------------------
+Version: 3.00.025
+
+--- Added dependency versions as menu item. (Important for debug)
+--- Fix issue in adult resolver.
+--- Added Pornilly to Tubes.
+
+-----------------------------------------
 Version: 3.00.024
 
 --- Added PandaMovies to Movies.
+--- Added Fuqer to Tubes.
 --- Added DaftPorn to Fetish.
 --- Code changes (misc)
 

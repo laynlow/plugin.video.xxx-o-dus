@@ -209,6 +209,46 @@ def buildDir(items, content='dirs', cm=[], search=False, stopend=False, isVideo 
         if cache: xbmcplugin.endOfDirectory(syshandle, cacheToDisc=True)
         else: xbmcplugin.endOfDirectory(syshandle, cacheToDisc=False)
     
+@url_dispatcher.register('45')
+def depVersions():
+    
+    try:
+        xml1 = client.request('https://raw.githubusercontent.com/Colossal1/repository.colossus/master/addons.xml')
+        xml2 = client.request('https://raw.githubusercontent.com/Colossal1/repository.colossus.common/master/addons.xml')
+        lst = [('plugin.video.xxx-o-dus'),('script.xxxodus.scrapers'),('script.xxxodus.artwork'), \
+               ('script.module.echo'),('script.module.urlresolver'),('script.module.urlresolver.xxx')]
+
+        c = []
+        for i in lst:
+            addon_name = xbmcaddon.Addon('%s' % i).getAddonInfo('name')
+            addon_id = xbmcaddon.Addon('%s' % i).getAddonInfo('id')
+            addon_version = xbmcaddon.Addon('%s' % i).getAddonInfo('version')
+            addon_description = xbmcaddon.Addon('%s' % i).getAddonInfo('description')
+            pattern = r'''id=['"]%s['"][\w\s='"-]+version=['"]([^'"]+)['"]''' % addon_id
+            try: 
+                cur_ver = re.findall(pattern, xml1)[0]
+            except:
+                try:
+                    cur_ver = re.findall(pattern, xml2)[0]
+                except: cur_ver = 'Unknown'
+                
+            in_v = int(addon_version.replace('.',''))
+            cur_v = int(cur_ver.replace('.',''))
+            if in_v < cur_v: ver_color = 'orangered'
+            else: ver_color = 'lime'
+            icon = xbmc.translatePath(os.path.join('special://home/addons', addon_id + '/icon.png'))
+            c += [(kodi.giveColor(addon_name,'white',True) + kodi.giveColor('| Installed: ','white') + kodi.giveColor(addon_version,ver_color,True) + ' - ' + kodi.giveColor('Available: ','white',True) + kodi.giveColor(cur_ver,'pink',True), icon, kodi.addonfanart, addon_description)]
+        
+        dirlst = []
+        
+        for e in c:
+            dirlst.append({'name': kodi.giveColor(e[0],'white'), 'url': None, 'mode': 999, 'icon': e[1], 'fanart': e[2], 'description': e[3], 'folder': False})
+
+        buildDir(dirlst)
+    except:
+        kodi.notify(msg='Error opening directory.', sound = True)
+        quit()
+
 @url_dispatcher.register('19')
 def showSettings():
 
