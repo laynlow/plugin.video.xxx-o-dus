@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <settings>
     <category label="[COLOR dodgerblue]General[/COLOR]">
+        <setting type="lsep" label="[COLOR dodgerblue][B]Parental Control Session[/B][/COLOR]"/>
+        <setting type="lsep" label="[COLOR white]When you enter a parental password the setting below is the amount of minutes you want the addon to wait before asking again.[/COLOR]"/>
+        <setting id="session_time" label="[COLOR white]Session Time (Minutes):[/COLOR]" type="number" default="30" visible="true"/>
         <setting type="lsep" label="[COLOR dodgerblue][B]Monitoring Settings[/B][/COLOR]"/>
         <setting id="search_setting" type="bool" label="[COLOR white]Search History:[/COLOR]" default="true"/>
         <setting id="history_setting" type="bool" label="[COLOR white]Log History:[/COLOR]" default="true"/>

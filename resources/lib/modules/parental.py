@@ -33,20 +33,22 @@ def parentalCheck():
         password = passwd
     conn.close()
     
+    session_time = int(kodi.get_setting('session_time'))
+    
     if password:
         try:
             now = time.time()
-            check = now - 60*30
+            check = now - 60*session_time
             if ( not timestamp ): timestamp = 0
         except: 
             now = time.time()
-            check = now - 60*30
+            check = now - 60*session_time
             timestamp = 0
     else: return
     
     if (timestamp < check):
 
-        input = kodi.get_keyboard('Please Enter Your Password - %s' % kodi.giveColor('(30 Minute Session)','red',True))
+        input = kodi.get_keyboard('Please Enter Your Password - %s' % kodi.giveColor('(%s Minute Session)' % str(session_time),'red',True), hidden=True)
         if ( not input ):
             sys.exit(0)
 
@@ -58,7 +60,7 @@ def parentalCheck():
         else:
             delEntry(password)
             addEntry(password, now)
-            kodi.dialog.ok(kodi.get_name(),'Login successful!','You now have a 30 minute session before you will be asked for the password again.')
+            kodi.dialog.ok(kodi.get_name(),'Login successful!','You now have a %s minute session before you will be asked for the password again.' % str(session_time))
     return
 
 @utils.url_dispatcher.register('5')
@@ -96,14 +98,14 @@ def parentalControls():
 @utils.url_dispatcher.register('13')
 def parentalPin():
 
-    input = kodi.get_keyboard('Please Set Password')
+    input = kodi.get_keyboard('Please Set Password', hidden=True)
     if ( not input ):
         kodi.dialog.ok(kodi.get_name(),"Sorry, no password was entered.")
         sys.exit(0)
 
     pass_one = input
 
-    input = kodi.get_keyboard('Please Confirm Your Password')
+    input = kodi.get_keyboard('Please Confirm Your Password', hidden=True)
     if ( not input ):
         kodi.dialog.ok(kodi.get_name(),"Sorry, no password was entered.")
         sys.exit(0)
@@ -122,7 +124,7 @@ def parentalPin():
 @utils.url_dispatcher.register('14')
 def parentalOff():
 
-    input = kodi.get_keyboard('Please Enter Your Password')
+    input = kodi.get_keyboard('Please Enter Your Password', hidden=True)
     if ( not input ):
         kodi.dialog.ok(kodi.get_name(),"Sorry, no password was entered.")
         sys.exit(0)

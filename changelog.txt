@@ -1,4 +1,11 @@
 -----------------------------------------
+Version: 3.00.026
+
+--- Fix Chaturbate.
+--- Fix Spankbang.
+--- Added Parental timeout setting to Settings.
+
+-----------------------------------------
 Version: 3.00.025
 
 --- Added dependency versions as menu item. (Important for debug)

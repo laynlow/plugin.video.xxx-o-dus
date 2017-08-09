@@ -20,8 +20,8 @@ def find(url, name=None, iconimage=None, pattern=None):
     try:
         if 'streamingporn.xyz' in url:
             c = client.request(url)
-            r = dom_parser2.parse_dom(c, 'iframe', req=['height','width'])
-            r = [i.attrs['src'] for i in r if i.attrs['height'] == '400' and i.attrs['width'] == '700']
+            r = dom_parser2.parse_dom(c, 'iframe', req=['src'])
+            r = [i.attrs['src'] for i in r if urlresolver.HostedMediaFile(i.attrs['src']).valid_url()]
             url = multi(r)
         elif 'spreadporn.org' in url:
             c = client.request(url)
